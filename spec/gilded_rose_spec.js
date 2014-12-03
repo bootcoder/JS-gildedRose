@@ -15,5 +15,10 @@ describe("Gilded Rose", function() {
 		})
 	});
 
+	describe("updateQuality", function() {
+
+	})
+
 });
 
+  // - At the end of each day our system lowers both values for every item
