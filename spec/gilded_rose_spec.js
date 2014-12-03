@@ -29,6 +29,7 @@ describe("Gilded Rose", function() {
 			items.push(new Item('Test Dexterity Vest', 10, 20));
 			items.push(new Item('Aged Brie', 2, 0));
 			items.push(new Item('Sulfuras, Hand of Ragnaros', 0, 80));
+			items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 15, 20));
 
 		});
 
@@ -93,6 +94,46 @@ describe("Gilded Rose", function() {
 				var sulfurasSellIn = items[2].sell_in;
 				updateQuality();
 				expect(items[2].sell_in).toBe(sulfurasSellIn);
+			});
+
+		});
+
+		describe("Updating the quality of Backstage Passes", function(){
+
+			// - "Backstage passes", like aged brie, increases in *quality* as it's *sell_in*
+			//     value decreases; *quality* increases by 2 when there are 10 days or less
+			//     and by 3 when there are 5 days or less but *quality* drops to 0 after the
+			//     concert
+
+			it("quality increases by 1 when sell_in is > 10", function(){
+				items[3].sell_in = 11;
+				var passesQuality = items[3].quality;
+				updateQuality();
+				expect(items[3].quality).toBe(passesQuality+1);
+			});
+
+			it("quality increases by 2 when sell_in is < 10 > 5", function(){
+				items[3].sell_in = 6;
+				var passesQuality = items[3].quality;
+				updateQuality();
+				expect(items[3].quality).toBe(passesQuality+2);
+			});
+
+
+			it("quality increases by 3 when sell_in is < 5", function(){
+				items[3].sell_in = 1;
+				var passesQuality = items[3].quality;
+				updateQuality();
+				expect(items[3].quality).toBe(passesQuality+3);
+			});
+
+
+			it("quality reduces to 0 when sell_in < 0", function(){
+				items[3].sell_in = 0;
+				var passesQuality = items[3].quality;
+				updateQuality();
+				console.log(items[3].sell_in);
+				expect(items[3].quality).toBe(0);
 			});
 
 		});
