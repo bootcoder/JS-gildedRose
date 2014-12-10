@@ -30,7 +30,7 @@ describe("Gilded Rose", function() {
 			items.push(new Item('Aged Brie', 2, 0));
 			items.push(new Item('Sulfuras, Hand of Ragnaros', 0, 80));
 			items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 15, 20));
-
+			items.push(new Item('Conjured Mana Cake', 10, 20));
 		});
 
 		describe("updating the quality for basic items", function(){
@@ -136,6 +136,14 @@ describe("Gilded Rose", function() {
 				expect(items[3].quality).toBe(0);
 			});
 
+		});
+
+		describe ("updating the quality of a conjured item", function(){
+			it("should degrade in quality at 2x rate of normal items", function(){
+				var item_quality = items[4].quality;
+				updateQuality();
+				expect(items[4].quality).toBe(item_quality-2);
+			});
 		});
 
 
